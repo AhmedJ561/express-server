@@ -1,3 +1,4 @@
+require('dotenv').config(); // Load environment variables
 const express = require('express');
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
@@ -11,7 +12,16 @@ app.get('/', (req, res) => {
     res.send('Server is running! 🚀');
 });
 
-// Your existing routes...
+// Email transport setup
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL_USER, // Load from .env
+        pass: process.env.EMAIL_PASS  // Load from .env
+    }
+});
+
+// Send OTP route
 app.post('/send-otp', (req, res) => {
     const { email, otp } = req.body;
 
@@ -19,16 +29,8 @@ app.post('/send-otp', (req, res) => {
         return res.status(400).json({ error: 'Email and OTP are required' });
     }
 
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'ahmedjamil561@gmail.com',
-            pass: 'znzm rjko inka slte'
-        }
-    });
-
     const mailOptions = {
-        from: 'ahmedjamil561@gmail.com',
+        from: process.env.EMAIL_USER,
         to: email,
         subject: 'Your OTP Code',
         text: `Your OTP code is: ${otp}`
