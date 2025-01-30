@@ -3,15 +3,18 @@
   "version": "1.0.0",
   "description": "A simple Node.js service to send OTPs via email.",
   "main": "server.js",
+  "engines": {
+    "node": "15.x"
+  },
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
+    "body-parser": "^1.19.2",
     "express": "^4.17.1",
-    "nodemailer": "^6.7.2",
-    "body-parser": "^1.19.2"
+    "nodemailer": "^6.7.2"
   },
   "devDependencies": {
-    "vercel": "^2.1.6"
+    "vercel": "^39.4.2"
   }
 }
