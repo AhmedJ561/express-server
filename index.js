@@ -12,8 +12,8 @@ app.use(bodyParser.json());
 const transporter = nodemailer.createTransport({
     service: 'gmail', // You can use other email services like 'yahoo', 'hotmail', etc.
     auth: {
-        user: process.env.EMAIL_USER, // Your email
-        pass: process.env.EMAIL_PASS // Your email password or app-specific password
+        user:"ahmedjamil561@gmail.com", // Your email
+        pass: "znzm rjko inka slte" // Your email password or app-specific password
     }
 });
 
@@ -26,7 +26,7 @@ app.post('/send-otp', (req, res) => {
     }
 
     const mailOptions = {
-        from: process.env.EMAIL_USER,
+        from: "ahmedjamil561@gmail.com",
         to: email,
         subject: 'Your OTP Code',
         text: `Your OTP code is: ${otp}`
