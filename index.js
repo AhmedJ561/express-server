@@ -1,4 +1,3 @@
-require('dotenv').config(); // Load environment variables
 const express = require('express');
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
@@ -6,22 +5,19 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
 
+// Middleware to parse JSON bodies
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
-    res.send('Server is running! 🚀');
-});
-
-// Email transport setup
+// Configure nodemailer transporter
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    service: 'gmail', // You can use other email services like 'yahoo', 'hotmail', etc.
     auth: {
-        user: process.env.EMAIL_USER, // Load from .env
-        pass: process.env.EMAIL_PASS  // Load from .env
+        user: process.env.EMAIL_USER, // Your email
+        pass: process.env.EMAIL_PASS // Your email password or app-specific password
     }
 });
 
-// Send OTP route
+// Route to send OTP
 app.post('/send-otp', (req, res) => {
     const { email, otp } = req.body;
 
@@ -45,4 +41,6 @@ app.post('/send-otp', (req, res) => {
     });
 });
 
-module.exports = app;
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
+});
