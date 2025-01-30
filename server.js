@@ -5,25 +5,27 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
 
-// Middleware to parse JSON bodies
 app.use(bodyParser.json());
 
-// Configure nodemailer transporter
-const transporter = nodemailer.createTransport({
-    service: 'gmail', // You can use other email services like 'yahoo', 'hotmail', etc.
-    auth: {
-        user: 'ahmedjamil561@gmail.com', // Your email
-        pass: 'znzm rjko inka slte' // Your email password or app-specific password
-    }
+app.get('/', (req, res) => {
+    res.send('Server is running! 🚀');
 });
 
-// Route to send OTP
+// Your existing routes...
 app.post('/send-otp', (req, res) => {
     const { email, otp } = req.body;
 
     if (!email || !otp) {
         return res.status(400).json({ error: 'Email and OTP are required' });
     }
+
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'ahmedjamil561@gmail.com',
+            pass: 'znzm rjko inka slte'
+        }
+    });
 
     const mailOptions = {
         from: 'ahmedjamil561@gmail.com',
@@ -41,6 +43,4 @@ app.post('/send-otp', (req, res) => {
     });
 });
 
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-});
+module.exports = app;
