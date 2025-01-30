@@ -1,3 +1,4 @@
+require('dotenv').config(); // Load environment variables
 const express = require('express');
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
@@ -5,19 +6,22 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
 
-// Middleware to parse JSON bodies
 app.use(bodyParser.json());
 
-// Configure nodemailer transporter
+app.get('/', (req, res) => {
+    res.send('Server is running! 🚀');
+});
+
+// Email transport setup
 const transporter = nodemailer.createTransport({
-    service: 'gmail', // You can use other email services like 'yahoo', 'hotmail', etc.
+    service: 'gmail',
     auth: {
-        user:"ahmedjamil561@gmail.com", // Your email
-        pass: "znzm rjko inka slte" // Your email password or app-specific password
+        user: process.env.EMAIL_USER, // Load from .env
+        pass: process.env.EMAIL_PASS  // Load from .env
     }
 });
 
-// Route to send OTP
+// Send OTP route
 app.post('/send-otp', (req, res) => {
     const { email, otp } = req.body;
 
@@ -26,7 +30,7 @@ app.post('/send-otp', (req, res) => {
     }
 
     const mailOptions = {
-        from: "ahmedjamil561@gmail.com",
+        from: process.env.EMAIL_USER,
         to: email,
         subject: 'Your OTP Code',
         text: `Your OTP code is: ${otp}`
@@ -41,6 +45,4 @@ app.post('/send-otp', (req, res) => {
     });
 });
 
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-});
+module.exports = app;
