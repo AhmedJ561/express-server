@@ -1,0 +1,17 @@
+{
+  "name": "email-otp-service",
+  "version": "1.0.0",
+  "description": "A simple Node.js service to send OTPs via email.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemailer": "^6.7.2",
+    "body-parser": "^1.19.2"
+  },
+  "devDependencies": {
+    "vercel": "^2.1.6"
+  }
+}
